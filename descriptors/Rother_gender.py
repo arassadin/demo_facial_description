@@ -23,10 +23,10 @@ class predictor(object):
 
     def predict(self, frame, bbox):
         top, bottom, left, right = bbox
-        t = max(top - top * self.margin, 0)
-        b = min(bottom + bottom * self.margin, frame.shape[0])
-        l = max(left - left * self.margin, 0)
-        r = min(right + right * self.margin, frame.shape[1])
+        t = max(int(top - top * self.margin), 0)
+        b = min(int(bottom + bottom * self.margin), frame.shape[0])
+        l = max(int(left - left * self.margin), 0)
+        r = min(int(right + right * self.margin), frame.shape[1])
 
         face = frame[t : b, l : r, :].astype(np.float32)
         for c_i in range(3):
