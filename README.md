@@ -6,7 +6,7 @@ Currently supports *age* and *gender* recognition.
 # Requirements
 * [Ubuntu](https://www.ubuntu.com/) (tested 16.04)
 * [Python](https://www.python.org/) 2.x (tested 2.7.12)
-* [OpenCV](http://opencv.org/) 2.4.x
+* [OpenCV](http://opencv.org/) 2.4.x (tested 2.4.12.3, manual build)
 * [Caffe](http://caffe.berkeleyvision.org/) with Python bindings
 * [Dlib](http://dlib.net/) with Python bindings
 * [NumPy](http://www.numpy.org/)
@@ -26,3 +26,18 @@ Currently supports *age* and *gender* recognition.
     from the root of the repository.
 
 # HowTo
+1. Camera calibration
+    * fill the section *calibration* in the your config file (see `configs/config.yml.example` for possible parameters) with the appropriate values
+    * run 
+
+        `./calibrate.sh PATH_TO_CONFIG`
+
+    Calibrations will be saved in the `calibrations` subfolder with name specified in the config.
+
+2. Running the app
+    * fill the section *app* in the your config file (see `configs/config.yml.example` for possible parameters) with the appropriate values
+    * run 
+
+        `./run.sh PATH_TO_CONFIG`
+
+    You should see a resizable window with your stream (camera or video file) overlaid by the facial b-boxes and facial descriptions.

@@ -39,7 +39,7 @@ def calibrate(conf_path):
         break_flag = False
         for el in config.get('calibration').get('excluded'):
             if str(el) in os.path.basename(calib_f):
-                print '[{}] [INFO]     Frame is in excluded list. Ignoring'.format(time.strftime("%H:%M:%S"))
+                print '[{}] [INFO]     Frame is in excluded list. Ignoring.'.format(time.strftime("%H:%M:%S"))
                 break_flag = True
                 break
                 
