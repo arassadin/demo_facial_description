@@ -2,8 +2,6 @@ import os
 import cv2
 import numpy as np
 from glob import glob
-import dlib
-import sys
 import time
 from config import config
 import click

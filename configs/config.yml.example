@@ -12,3 +12,39 @@ calibration:
         corners_max_it: 50
         cam_mtx_eps: 0.001
         cam_mtx_max_it: 100
+
+app:
+    caffe_build_dir: ''
+    mode: 'cpu'
+    source: 0
+    template: '*.png'
+    skip: True
+    undistortion:
+        enabled: False
+        method: 1 # 2 | 3
+    frames:
+        save: False
+        path: ''
+    fd:
+        detector: 'dlib' # |'ocv'
+        save: False
+        path: ''
+    gender:
+        enable: True
+        type: 'Rother' # | 'Levi'
+        model_weights: ''
+        model_decl: ''
+    age:
+        enable: True
+        type: 'Rother' # | 'Levi'
+        model_weights: ''
+        model_decl: ''
+    Levi:
+        size: [256, 256]
+        net_size: [227, 227]
+        mean_file: ''
+        oversampling: False
+    Rother:
+        size: [224, 224]
+        means: [103.939, 116.779, 123.68] # BGR
+        margin: 0.4
