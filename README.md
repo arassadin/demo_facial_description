@@ -38,6 +38,6 @@ Currently supports *age* and *gender* recognition.
     * fill the section *app* in the your config file (see `configs/config.yml.example` for possible parameters) with the appropriate values
     * run 
 
-        `./run.sh PATH_TO_CONFIG`
+        `CAFFE_ROOT=/path/to/caffe/ ./run.sh PATH_TO_CONFIG`
 
     You should see a resizable window with your stream (camera or video file) overlaid by the facial b-boxes and facial descriptions.
