@@ -4,10 +4,8 @@ from scipy.misc import *
 import time
 import numpy as np
 
-caffe_root = '/home/alexandr/distr/caffe/'
-sys.path.insert(0, caffe_root + 'python')
+sys.path.insert(0, os.path.join(os.environ['CAFFE_ROOT'], 'python'))
 import caffe
-caffe.set_mode_cpu()
 
 AGE_GROUPS = ['0-2', '4-6', '8-13', '15-20', '25-32', '38-43', '48-53', '60+']
 

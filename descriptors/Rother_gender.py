@@ -4,8 +4,7 @@ from scipy.misc import *
 import time
 import numpy as np
 
-caffe_root = '/home/alexandr/distr/caffe/'
-sys.path.insert(0, caffe_root + 'python')
+sys.path.insert(0, os.path.join(os.environ['CAFFE_ROOT'], 'python'))
 import caffe
 
 GENDER_GROUPS = ['female', 'male']
