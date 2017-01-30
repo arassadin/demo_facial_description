@@ -21,6 +21,7 @@ app:
     undistortion:
         enabled: False
         method: 1 # 2 | 3
+        calibs: 'calibrations/default.npy'
     frames:
         save: False
         path: ''
@@ -28,6 +29,7 @@ app:
         detector: 'dlib' # |'ocv'
         save: False
         path: ''
+        ocv_cascade: '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
     gender:
         enable: True
         type: 'Rother' # | 'Levi'

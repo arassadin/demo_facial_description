@@ -54,6 +54,9 @@ def main(conf_path):
             from descriptors.Levi_gender import predictor
             predictor_gender = predictor(config)
 
+    if config.get('app').get('undistortion').get('enabled'):
+        calibrations = np.load(config.get('app').get('undistortion').get('calibs'))[()]
+
     detector = dlib.get_frontal_face_detector()
     frames_counter = 1
     cv2.namedWindow('stream', cv2.WINDOW_NORMAL)
@@ -64,6 +67,19 @@ def main(conf_path):
                 print '[{}] [INFO] No more frames. Exiting.'.format(time.strftime("%H:%M:%S"))
                 break
             print '[{}] [INFO] Processing frame #{}..'.format(time.strftime("%H:%M:%S"), frames_counter)
+            if config.get('app').get('undistortion').get('enabled'):
+                if config.get('app').get('undistortion').get('method') == 1:
+                    frame = undist_1(frame, calibrations['cmtx'], calibrations['dist'])
+                elif config.get('app').get('undistortion').get('method') == 2:
+                    frame = undist_1(frame, calibrations['cmtx'],
+                                            calibrations['dist'], 
+                                            calibrations['cmtx_new'])
+                elif config.get('app').get('undistortion').get('method') == 3:
+                    frame = undist_1(frame, calibrations['cmtx'],
+                                            calibrations['dist'], 
+                                            calibrations['cmtx_new'])
+                else:
+                    print '[{}] [WARNING] Illegal undistortion method chosen. Leaving frame as is.'.format(time.strftime("%H:%M:%S"))
 
             if config.get('app').get('frames').get('save'):
                 cv2.imwrite(os.path.join(config.get('app').get('frames').get('path'),
