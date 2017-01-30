@@ -1,0 +1,14 @@
+calibration:
+    frames_path: ''
+    pattern: [9, 6]
+    excluded: []
+    template: '*.png'
+    out_name: 'default'
+    results:
+        save: False
+        path: ''
+    criteria:
+        corners_eps: 0.001
+        corners_max_it: 50
+        cam_mtx_eps: 0.001
+        cam_mtx_max_it: 100
