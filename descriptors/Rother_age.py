@@ -20,7 +20,6 @@ class predictor(object):
         self.means = config.get('app').get('Rother').get('means')
 
     def predict(self, frame, bbox):
-        start = time.time()
         top, bottom, left, right = bbox
         t = max(int(top - top * self.margin), 0)
         b = min(int(bottom + bottom * self.margin), frame.shape[0])
@@ -32,6 +31,7 @@ class predictor(object):
             face[:, :, c_i] -= self.means[c_i]
         face = imresize(face, self.size)
         data = np.expand_dims(face.transpose(2, 0, 1), 0)
+        start = time.time()
         pred = np.argmax(self.net.forward_all(data=data)['prob'])
         end = time.time()
         return pred, end - start
