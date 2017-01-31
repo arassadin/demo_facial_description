@@ -10,13 +10,14 @@ import cv2
 def undist_1(img, mtx, dist, mtx_new=None):
     undist = cv2.undistort(img, mtx, dist, None, mtx_new)
     if mtx_new is not None:
-        undist = np.flipud(undist)
-        undist = np.fliplr(undist)
+        undist = cv2.flip(undist, -1)
     return undist
 
 def undist_2(img, mtx, dist, mtx_new):
     mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, mtx_new, img.shape[:2][::-1], 5)
-    return cv2.remap(img, mapx, mapy, cv2.INTER_CUBIC)
+    undist = cv2.remap(img, mapx, mapy, cv2.INTER_CUBIC)
+    undist = cv2.flip(undist, -1)
+    return undist
 
 @click.command()
 @click.option('-c', '--config', 'conf_path',
@@ -89,9 +90,8 @@ def main(conf_path):
             print '[{}] [INFO]     {} faces detected'.format(time.strftime("%H:%M:%S"), len(dets))
             bboxes = []
             for i_d, d in enumerate(dets, start=1):
-                cv2.rectangle(frame, (d.left(), d.top()), (d.right(), d.bottom()), (0, 255, 0), 3)
                 print '[{}] [INFO]         Processing face #{}'.format(time.strftime("%H:%M:%S"), i_d)
-                face = frame[d.top() : d.bottom(), d.left() : d.right(), :]
+                face = frame[d.top() : d.bottom(), d.left() : d.right(), :].copy()
                 if config.get('app').get('fd').get('save'):
                     cv2.imwrite(os.path.join(config.get('app').get('fd').get('path'),
                                              'frame{}_face{}.png'.format(str(frames_counter).zfill(5),
@@ -99,6 +99,7 @@ def main(conf_path):
                                                                         )
                                             ),
                                 face)
+                cv2.rectangle(frame, (d.left(), d.top()), (d.right(), d.bottom()), (0, 255, 0), 3)
 
                 txt = []
                 if config.get('app').get('gender').get('enable'):
@@ -112,7 +113,7 @@ def main(conf_path):
                     print '[{}] [INFO]         Age: {}'.format(time.strftime("%H:%M:%S"), age)
                     txt.append(str(age))
 
-                    cv2.putText(frame, ','.join(txt), (d.left(), d.top()), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.putText(frame, ','.join(txt), (d.left(), d.top()), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
             cv2.imshow('stream', frame)
             cv2.waitKey(500)
