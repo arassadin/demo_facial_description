@@ -46,7 +46,7 @@ Currently supports *age* and *gender* recognition.
 
         This model based on the pre-trained one on ImageNet2014 dataset [3] and then fine-tuned on [IMDB-WIKI](https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/). Actually this project uses the model which was additionally fine-tuned on the [LAP challendge](http://gesture.chalearn.org/) dataset.
 
-    This repository already provides network declarations (see `models` subfolder), pre-trained weights can donwloaded via running
+    This repository already provides network declarations (see `models` subfolder), pre-trained weights can be donwloaded by running
 
     `./download_models.sh`
 
