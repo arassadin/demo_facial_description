@@ -91,7 +91,7 @@ def main(conf_path):
             bboxes = []
             for i_d, d in enumerate(dets, start=1):
                 print '[{}] [INFO]         Processing face #{}'.format(time.strftime("%H:%M:%S"), i_d)
-                face = frame[d.top() : d.bottom(), d.left() : d.right(), :].copy()
+                face = frame[d.top() : d.bottom(), d.left() : d.right(), :]
                 if config.get('app').get('fd').get('save'):
                     cv2.imwrite(os.path.join(config.get('app').get('fd').get('path'),
                                              'frame{}_face{}.png'.format(str(frames_counter).zfill(5),

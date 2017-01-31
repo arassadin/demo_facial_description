@@ -1,8 +1,8 @@
 import sys
 import os
-from scipy.misc import *
 import time
 import numpy as np
+import cv2
 
 sys.path.insert(0, os.path.join(os.environ['CAFFE_ROOT'], 'python'))
 import caffe
@@ -26,10 +26,11 @@ class predictor(object):
         l = max(int(left - left * self.margin), 0)
         r = min(int(right + right * self.margin), frame.shape[1])
 
-        face = frame[t : b, l : r, :].astype(np.float32)
+        face = frame[t : b, l : r, :].copy()
+        face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB).astype(np.float32)
         for c_i in range(3):
             face[:, :, c_i] -= self.means[c_i]
-        face = imresize(face, self.size)
+        face = cv2.resize(face, tuple(self.size))
         data = np.expand_dims(face.transpose(2, 0, 1), 0)
         start = time.time()
         pred = np.argmax(self.net.forward_all(data=data)['prob'])
