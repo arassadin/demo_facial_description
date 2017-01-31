@@ -33,13 +33,13 @@ app:
     gender:
         enable: True
         type: 'Rother' # | 'Levi'
-        model_weights: ''
-        model_decl: ''
+        model_weights: 'models/Rother et al./gender_weights.caffemodel'
+        model_decl: 'models/Rother et al./gender_deploy.prototxt'
     age:
         enable: True
         type: 'Rother' # | 'Levi'
-        model_weights: ''
-        model_decl: ''
+        model_weights: 'models/Rother et al./age_weights.caffemodel'
+        model_decl: 'models/Rother et al./age_deploy.prototxt'
     Levi:
         size: [256, 256]
         net_size: [227, 227]
