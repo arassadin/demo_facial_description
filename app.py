@@ -15,7 +15,7 @@ def undist_1(img, mtx, dist, mtx_new=None):
     return undist
 
 def undist_2(img, mtx, dist, mtx_new):
-    mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, mtx_new, IMG_SIZE, 5)
+    mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, mtx_new, img.shape[:2][::-1], 5)
     return cv2.remap(img, mapx, mapy, cv2.INTER_CUBIC)
 
 @click.command()
@@ -39,16 +39,16 @@ def main(conf_path):
     predictor_gender = None
 
     if config.get('app').get('age').get('enable'):
-        if config.get('app').get('age').get('type') == 'Rother':
-            from descriptors.Rother_age import predictor
+        if config.get('app').get('age').get('type') == 'Rothe':
+            from descriptors.Rothe_age import predictor
             predictor_age = predictor(config)
         elif config.get('app').get('age').get('type') == 'Levi':
             from descriptors.Levi_age import predictor
             predictor_age = predictor(config)
 
     if config.get('app').get('gender').get('enable'):
-        if config.get('app').get('gender').get('type') == 'Rother':
-            from descriptors.Rother_gender import predictor
+        if config.get('app').get('gender').get('type') == 'Rothe':
+            from descriptors.Rothe_gender import predictor
             predictor_gender = predictor(config)
         elif config.get('app').get('gender').get('type') == 'Levi':
             from descriptors.Levi_gender import predictor
@@ -75,7 +75,7 @@ def main(conf_path):
                                             calibrations['dist'], 
                                             calibrations['cmtx_new'])
                 elif config.get('app').get('undistortion').get('method') == 3:
-                    frame = undist_1(frame, calibrations['cmtx'],
+                    frame = undist_2(frame, calibrations['cmtx'],
                                             calibrations['dist'], 
                                             calibrations['cmtx_new'])
                 else:

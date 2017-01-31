@@ -7,17 +7,19 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.environ['CAFFE_ROOT'], 'python'))
 import caffe
 
+GENDER_GROUPS = ['female', 'male']
+
 class predictor(object):
 
     def __init__(self, config):
         if config.get('app').get('mode') == 'gpu':
             caffe.set_mode_gpu()
-        self.net = caffe.Net(config.get('app').get('age').get('model_decl'),
-            config.get('app').get('age').get('model_weights'),
+        self.net = caffe.Net(config.get('app').get('gender').get('model_decl'),
+            config.get('app').get('gender').get('model_weights'),
             caffe.TEST)
-        self.size = config.get('app').get('Rother').get('size')
-        self.margin = config.get('app').get('Rother').get('margin')
-        self.means = config.get('app').get('Rother').get('means')
+        self.size = config.get('app').get('Rothe').get('size')
+        self.margin = config.get('app').get('Rothe').get('margin')
+        self.means = config.get('app').get('Rothe').get('means')
 
     def predict(self, frame, bbox):
         top, bottom, left, right = bbox
@@ -34,4 +36,4 @@ class predictor(object):
         start = time.time()
         pred = np.argmax(self.net.forward_all(data=data)['prob'])
         end = time.time()
-        return pred, end - start
+        return GENDER_GROUPS[pred], end - start

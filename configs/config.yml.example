@@ -32,20 +32,20 @@ app:
         ocv_cascade: '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
     gender:
         enable: True
-        type: 'Rother' # | 'Levi'
-        model_weights: 'models/Rother et al./gender_weights.caffemodel'
-        model_decl: 'models/Rother et al./gender_deploy.prototxt'
+        type: 'Rothe' # | 'Levi'
+        model_weights: 'models/Rothe et al./gender_weights.caffemodel'
+        model_decl: 'models/Rothe et al./gender_deploy.prototxt'
     age:
         enable: True
-        type: 'Rother' # | 'Levi'
-        model_weights: 'models/Rother et al./age_weights.caffemodel'
-        model_decl: 'models/Rother et al./age_deploy.prototxt'
+        type: 'Rothe' # | 'Levi'
+        model_weights: 'models/Rothe et al./age_weights.caffemodel'
+        model_decl: 'models/Rothe et al./age_deploy.prototxt'
     Levi:
         size: [256, 256]
         net_size: [227, 227]
         mean_file: ''
         oversampling: False
-    Rother:
+    Rothe:
         size: [224, 224]
         means: [103.939, 116.779, 123.68] # BGR
         margin: 0.4
