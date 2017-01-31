@@ -13,6 +13,7 @@ import click
               type=click.Path(exists=True))
 def calibrate(conf_path):
     config.read(conf_path)
+    startt = time.time()
 
     calib_img_paths = sorted(glob(os.path.join(config.get('calibration').get('frames_path'),
         config.get('calibration').get('template'))))
@@ -46,6 +47,7 @@ def calibrate(conf_path):
         if break_flag:
             continue
 
+        tmp_start = time.time()
         img = cv2.imread(calib_f)
         if IMG_SIZE is None:
             IMG_SIZE = img.shape[:2][::-1]
@@ -67,6 +69,7 @@ def calibrate(conf_path):
                 cv2.drawChessboardCorners(img, PATTERN, corners, True)
                 cv2.imwrite(os.path.join(config.get('calibration').get('results').get('path'),
                                          os.path.basename(calib_f)), img)
+        print '[{}] [INFO]     Frame processed in {} sec.'.format(time.strftime("%H:%M:%S"), time.time() - tmp_start)
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
         config.get('calibration').get('criteria').get('cam_mtx_max_it'),
@@ -93,8 +96,9 @@ def calibrate(conf_path):
 
     np.save(os.path.join('calibrations', config.get('calibration').get('out_name')), res)
 
-    print '[{}] [INFO] Calibration done. Resluts saved in \'calibrations/{}.npy\''.format(time.strftime("%H:%M:%S"),
-                                                                                          config.get('calibration').get('out_name'))
+    print '[{}] [INFO] Calibration done in {} sec. Resluts saved in \'calibrations/{}.npy\''.format(time.strftime("%H:%M:%S"),
+                                                                                                    time.time() - startt
+                                                                                                    config.get('calibration').get('out_name'))
 
 if __name__ == "__main__":
     calibrate()

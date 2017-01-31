@@ -86,8 +86,10 @@ def main(conf_path):
                 cv2.imwrite(os.path.join(config.get('app').get('frames').get('path'),
                                          str(frames_counter).zfill(5) + '.png'), frame)
 
+            start = time.time()
             dets = detector(frame)
-            print '[{}] [INFO]     {} faces detected'.format(time.strftime("%H:%M:%S"), len(dets))
+            end = time.time()
+            print '[{}] [INFO]     {} faces detected (took {} sec.)'.format(time.strftime("%H:%M:%S"), len(dets), end - start)
             bboxes = []
             for i_d, d in enumerate(dets, start=1):
                 print '[{}] [INFO]         Processing face #{}'.format(time.strftime("%H:%M:%S"), i_d)
@@ -105,12 +107,12 @@ def main(conf_path):
                 if config.get('app').get('gender').get('enable'):
                     print '[{}] [INFO]             gender identification..'.format(time.strftime("%H:%M:%S"))
                     gender, t = predictor_gender.predict(frame, (d.top(), d.bottom(), d.left(), d.right()))
-                    print '[{}] [INFO]         Gender: {}'.format(time.strftime("%H:%M:%S"), gender)
+                    print '[{}] [INFO]         Gender: {} (took {} sec.)'.format(time.strftime("%H:%M:%S"), gender, t)
                     txt.append(str(gender))
                 if config.get('app').get('age').get('enable'):
                     print '[{}] [INFO]             age identification..'.format(time.strftime("%H:%M:%S"))
                     age, t = predictor_age.predict(frame, (d.top(), d.bottom(), d.left(), d.right()))
-                    print '[{}] [INFO]         Age: {}'.format(time.strftime("%H:%M:%S"), age)
+                    print '[{}] [INFO]         Age: {} (took {} sec.)'.format(time.strftime("%H:%M:%S"), age, t)
                     txt.append(str(age))
 
                 cv2.putText(frame, ','.join(txt), (d.left(), d.top()), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
