@@ -97,7 +97,7 @@ def calibrate(conf_path):
     np.save(os.path.join('calibrations', config.get('calibration').get('out_name')), res)
 
     print '[{}] [INFO] Calibration done in {} sec. Resluts saved in \'calibrations/{}.npy\''.format(time.strftime("%H:%M:%S"),
-                                                                                                    time.time() - startt
+                                                                                                    time.time() - startt,
                                                                                                     config.get('calibration').get('out_name'))
 
 if __name__ == "__main__":
