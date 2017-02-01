@@ -9,43 +9,43 @@ calibration:
         path: ''
     criteria:
         corners_eps: 0.001
-        corners_max_it: 50
+        corners_max_it: 100
         cam_mtx_eps: 0.001
         cam_mtx_max_it: 100
 
 app:
-    mode: 'cpu'
-    source: 0
+    mode: 'cpu' | 'cpu' | 'gpu'
+    source: 0 # ID | PATH_TO_FILE
     template: '*.png'
     skip: True
     undistortion:
         enabled: False
-        method: 1 # 2 | 3
+        method: 1 # 1 | 2 | 3
         calibs: 'calibrations/default.npy'
     frames:
         save: False
         path: ''
     fd:
-        detector: 'dlib' # |'ocv'
+        detector: 'dlib'
         save: False
         path: ''
         ocv_cascade: '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
     gender:
         enable: True
-        type: 'Rothe' # | 'Levi'
+        type: 'Rothe' # | 'Rothe' | 'Levi'
         model_weights: 'models/Rothe et al./gender_weights.caffemodel'
         model_decl: 'models/Rothe et al./gender_deploy.prototxt'
     age:
         enable: True
-        type: 'Rothe' # | 'Levi'
+        type: 'Rothe' # | 'Rothe' | 'Levi'
         model_weights: 'models/Rothe et al./age_weights.caffemodel'
         model_decl: 'models/Rothe et al./age_deploy.prototxt'
     Levi:
         size: [256, 256]
         net_size: [227, 227]
-        mean_file: ''
+        mean_file: 'models/Levi et al./mean.binaryproto'
         oversampling: False
     Rothe:
         size: [224, 224]
-        means: [103.939, 116.779, 123.68] # BGR
+        means: [103.939, 116.779, 123.68] # BGR format
         margin: 0.4
