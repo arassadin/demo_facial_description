@@ -86,8 +86,16 @@ def main(conf_path):
                 cv2.imwrite(os.path.join(config.get('app').get('frames').get('path'),
                                          str(frames_counter).zfill(5) + '.png'), frame)
 
+            if config.get('app').get('downsample').get('enable'):
+                msize = tuple(config.get('app').get('downsample').get('max_size'))
+                if frame.shape[0] * frame.shape[1] > msize[0] * msize[1]:
+                    frame = cv2.resize(frame, msize)
+
             start = time.time()
-            dets = detector(frame)
+            if config.get('app').get('fd').get('upsample'):
+                dets = detector(frame, 1)
+            else:
+                dets = detector(frame)
             end = time.time()
             print '[{}] [INFO]     {} faces detected (took {} sec.)'.format(time.strftime("%H:%M:%S"), len(dets), end - start)
             bboxes = []

@@ -18,6 +18,9 @@ app:
     source: 0 # ID | PATH_TO_FILE
     template: '*.png'
     skip: True
+    downsample:
+        enable: False
+        max_size: [640, 480]
     undistortion:
         enabled: False
         method: 1 # 1 | 2 | 3
@@ -27,6 +30,7 @@ app:
         path: ''
     fd:
         detector: 'dlib'
+        upsample: False # 'dlib' only
         save: False
         path: ''
         ocv_cascade: '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
